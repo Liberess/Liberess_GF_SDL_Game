@@ -48,7 +48,8 @@ void Render();
 int main(int argc, char* args[])
 {
   if(Init("Breaking Up HelloSDL",
-          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+          SDL_WINDOWPOS_CENTERED,
+          SDL_WINDOWPOS_CENTERED,
           640, 480,
           SDL_WINDOW_SHOWN))
   {
@@ -106,8 +107,6 @@ bool Init(const char* title, int xPos, int yPos, int height, int width, int flag
 void SetRenderColor(const int* color, int a)
 {
   SDL_SetRenderDrawColor(g_pRenderer, color[0], color[1], color[2], 255);
-
-  Render();
 }
 
 void Input()
@@ -116,9 +115,6 @@ void Input()
   cout << "0 = white, 1 = red, 2 = green, 3 = cyan, 4 = black, Other = Quit" << endl;
   cout << "배경색 선택 : ";
   cin >> answer;
-
-  if(answer < 0 || answer > 4)
-    g_bRunning = false;
 }
 
 void Render()
@@ -132,7 +128,11 @@ void Render()
 
 void Update()
 {
-  SetRenderColor(colors[answer]);
+  // 색상을 선택하지 않았다면, 종료
+  if(answer < 0 || answer > 4)
+    g_bRunning = false;
+  else
+    SetRenderColor(colors[answer]);
 }
 
 /*
