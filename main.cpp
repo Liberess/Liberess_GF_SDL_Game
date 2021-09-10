@@ -52,19 +52,19 @@ int main(int argc, char* args[])
     g_pRenderer = SDL_CreateRenderer(g_pWindow, -1, 0);
 
   // 2초 간격으로 Red->Green->Cyan 바탕색 변경
-  SDL_SetRenderDrawColor(g_pRenderer, 255, 0, 0, 255); // 개인
+  SDL_SetRenderDrawColor(g_pRenderer, 255, 0, 0, 255); // Red
   SDL_RenderClear(g_pRenderer);
   SDL_RenderPresent(g_pRenderer);
 
   SDL_Delay(2000);
 
-  SDL_SetRenderDrawColor(g_pRenderer, 0, 255, 0, 255); // 개인
+  SDL_SetRenderDrawColor(g_pRenderer, 0, 255, 0, 255); // Green
   SDL_RenderClear(g_pRenderer);
   SDL_RenderPresent(g_pRenderer);
 
   SDL_Delay(2000);
 
-  SDL_SetRenderDrawColor(g_pRenderer, 0, 255, 255, 255); // 개인
+  SDL_SetRenderDrawColor(g_pRenderer, 0, 255, 255, 255); // Cyan
   SDL_RenderClear(g_pRenderer);
   SDL_RenderPresent(g_pRenderer);
 
@@ -72,7 +72,7 @@ int main(int argc, char* args[])
 
   SDL_DestroyWindow(g_pWindow); // 윈도우 창 삭제
   SDL_DestroyRenderer(g_pRenderer); // 렌더러 삭제
-  
+
   SDL_Quit();
 
   return 0;
