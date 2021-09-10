@@ -38,6 +38,7 @@ bool g_bRunning = false;
 // Input 선택
 int answer;
 
+int main(int argc, char* args[]);
 bool Init(const char* title, int xPos, int yPos, int height, int width, int flags);
 void SetRenderColor(const int* color, int a = 255);
 void Input();
