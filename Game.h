@@ -5,6 +5,9 @@
 #include "SDL_image.h"
 #include <iostream>
 
+#define LEFT 0
+#define RIGHT 1
+
 using namespace std;
 
 class Game
@@ -12,14 +15,14 @@ class Game
 public:
   Game()
   {
-    mDirectionX = 1;
-    mDirectionY = 1;
+    direction = RIGHT;
+    moveSpeed = 7;
   }
   
   ~Game() {}
 
   bool Init(const char *title, int xpos, int ypos,  int width, int height, int flags);
-  void CreateTexture(SDL_Texture* _pTexture, SDL_Surface* _pTempSurface, SDL_Rect& _sourceRect, SDL_Rect& _destinationRect);
+  //void StretchTextureEx(SDL_Renderer* renderer, int x, int y, int w, int h, SDL_Texture* texture, float angle, SDL_RendererFlip flip = SDL_FLIP_NONE);
   void Render();
   void Update(); 
   bool Running();
@@ -35,10 +38,10 @@ private:
   SDL_Rect m_destinationRectangle; // 대상 사각형
   int mBorderlineX;
   int mBorderlineY;
-  int mDirectionX;
-  int mDirectionY;
-  int inputX;
-  int inputY;
+  int moveSpeed;
+  int previousPosX;
+  int previousPosY;
+  int direction;
 };
 
 #endif
