@@ -17,7 +17,7 @@ bool Game::Init(const char *title, int xpos, int ypos,  int width, int height, i
       else
         return false; // 랜더러 생성 실패
       
-      SDL_Surface* pTempSurface = SDL_LoadBMP("Assets/animate.bmp");
+      SDL_Surface* pTempSurface = IMG_Load("Assets/animate-alpha.png");
 
       if(pTempSurface != 0)
       {
@@ -26,6 +26,8 @@ bool Game::Init(const char *title, int xpos, int ypos,  int width, int height, i
 
         m_destinationRectangle.w = m_sourceRectangle.w = 128;
         m_destinationRectangle.h = m_sourceRectangle.h = 82;
+
+        SDL_SetRenderDrawColor(m_pRenderer, 100, 255, 100, 255); //붉은색 배경
 
         //CreateTexture(m_pTexture, pTempSurface, m_sourceRectangle, m_destinationRectangle);
       }

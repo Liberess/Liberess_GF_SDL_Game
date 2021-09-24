@@ -2,6 +2,7 @@
 #define __Game__
 
 #include "SDL.h"
+#include "SDL_image.h"
 #include <iostream>
 
 using namespace std;
@@ -36,6 +37,8 @@ private:
   int mBorderlineY;
   int mDirectionX;
   int mDirectionY;
+  int inputX;
+  int inputY;
 };
 
 #endif
