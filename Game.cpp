@@ -17,17 +17,16 @@ bool Game::Init(const char *title, int xpos, int ypos,  int width, int height, i
       else
         return false; // 랜더러 생성 실패
       
-      SDL_Surface* pTempSurface = SDL_LoadBMP("Assets/rider.bmp");
+      SDL_Surface* pTempSurface = SDL_LoadBMP("Assets/animate.bmp");
 
       if(pTempSurface != 0)
       {
         m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
         SDL_FreeSurface(pTempSurface);
-        SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
-        m_destinationRectangle.w = m_sourceRectangle.w;
-        m_destinationRectangle.h = m_sourceRectangle.h;
-        m_destinationRectangle.x = m_sourceRectangle.x = 0;
-        m_destinationRectangle.y = m_sourceRectangle.y = 0;
+
+        m_destinationRectangle.w = m_sourceRectangle.w = 128;
+        m_destinationRectangle.h = m_sourceRectangle.h = 82;
+
         //CreateTexture(m_pTexture, pTempSurface, m_sourceRectangle, m_destinationRectangle);
       }
       else
@@ -61,17 +60,7 @@ void Game::CreateTexture(SDL_Texture* _pTexture, SDL_Surface* _pTempSurface, SDL
 
 void Game::Update()
 {
-  // 경계선에 닿으면 튕기도록
-  if(m_destinationRectangle.x < 0 || m_destinationRectangle.x > mBorderlineX)
-    mDirectionX *= -1;
-  
-  if(m_destinationRectangle.y < 0 || m_destinationRectangle.y > mBorderlineY)
-    mDirectionY *= -1;
-
-  // float로 해서 튕기는 위치를 완전히 랜덤하게 하고 싶었지만..
-  // 찾아보니 SDL_Rect는 int형인지라 따로 만들어야 하더라고요.. ㅠㅠ
-  m_destinationRectangle.x += 1 * mDirectionX;
-  m_destinationRectangle.y += 1 * mDirectionY;
+  m_sourceRectangle.x = 128 * ((SDL_GetTicks() / 100) % 6);
 }
 
 void Game::Render()
