@@ -1,3 +1,5 @@
+//2021.09.17 3주차 렌더링 코드
+
 #include "Game.h"
 
 bool Game::Init(const char *title, int xpos, int ypos,  int width, int height, int flags) 
