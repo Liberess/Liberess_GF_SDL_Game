@@ -26,6 +26,12 @@ bool Game::Init(const char *title, int xpos, int ypos,  int width, int height, i
 
         SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
 
+        m_destinationRectangle.w = m_sourceRectangle.w;
+        m_destinationRectangle.h = m_sourceRectangle.h;
+
+        m_destinationRectangle.x = m_sourceRectangle.x = 0;
+        m_destinationRectangle.y = m_sourceRectangle.y = 0;
+
         // 응용1
         /* m_destinationRectangle.w = m_sourceRectangle.w = 50;
         m_destinationRectangle.h = m_sourceRectangle.h = 50; */
@@ -43,12 +49,6 @@ bool Game::Init(const char *title, int xpos, int ypos,  int width, int height, i
         m_destinationRectangle.h = 40;
         m_destinationRectangle.x = m_sourceRectangle.x = 50;
         m_destinationRectangle.y = m_sourceRectangle.y = 50; */
-
-        // 응용4
-        /* m_destinationRectangle.w = m_sourceRectangle.w = width;
-        m_destinationRectangle.h = m_sourceRectangle.h = height;
-        m_destinationRectangle.x = m_sourceRectangle.x = 0;
-        m_destinationRectangle.y = m_sourceRectangle.y = 0; */
 
         // 실습1
         cout << "w : " << m_destinationRectangle.w << endl;
@@ -105,6 +105,10 @@ void Game::Render()
 {
   SDL_RenderClear(m_pRenderer);  
   SDL_RenderCopy(m_pRenderer, m_pTexture, &m_sourceRectangle, &m_destinationRectangle);
+  
+  // 응용4
+  //SDL_RenderCopy(m_pRenderer, m_pTexture, NULL, NULL);
+
   SDL_RenderPresent(m_pRenderer);
 }
 
