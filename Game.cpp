@@ -23,11 +23,37 @@ bool Game::Init(const char *title, int xpos, int ypos,  int width, int height, i
       {
         m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, pTempSurface);
         SDL_FreeSurface(pTempSurface);
+
         SDL_QueryTexture(m_pTexture, NULL, NULL, &m_sourceRectangle.w, &m_sourceRectangle.h);
-        m_destinationRectangle.w = m_sourceRectangle.w;
-        m_destinationRectangle.h = m_sourceRectangle.h;
+
+        // 응용1
+        /* m_destinationRectangle.w = m_sourceRectangle.w = 50;
+        m_destinationRectangle.h = m_sourceRectangle.h = 50; */
+
+        // 응용2
+        /* m_sourceRectangle.w = 50;
+        m_sourceRectangle.h = 50;
+        m_destinationRectangle.w = 40;
+        m_destinationRectangle.h = 40;
+        m_destinationRectangle.x = 80;
+        m_destinationRectangle.y = 80; */
+
+        // 응용3
+        /* m_destinationRectangle.w = 40;
+        m_destinationRectangle.h = 40;
+        m_destinationRectangle.x = m_sourceRectangle.x = 50;
+        m_destinationRectangle.y = m_sourceRectangle.y = 50; */
+
+        // 응용4
+        /* m_destinationRectangle.w = m_sourceRectangle.w = width;
+        m_destinationRectangle.h = m_sourceRectangle.h = height;
         m_destinationRectangle.x = m_sourceRectangle.x = 0;
-        m_destinationRectangle.y = m_sourceRectangle.y = 0;
+        m_destinationRectangle.y = m_sourceRectangle.y = 0; */
+
+        // 실습1
+        cout << "w : " << m_destinationRectangle.w << endl;
+        cout << "h : " << m_destinationRectangle.h << endl;
+
         //CreateTexture(m_pTexture, pTempSurface, m_sourceRectangle, m_destinationRectangle);
       }
       else
@@ -61,6 +87,7 @@ void Game::CreateTexture(SDL_Texture* _pTexture, SDL_Surface* _pTempSurface, SDL
 
 void Game::Update()
 {
+  /*
   // 경계선에 닿으면 튕기도록
   if(m_destinationRectangle.x < 0 || m_destinationRectangle.x > mBorderlineX)
     mDirectionX *= -1;
@@ -71,7 +98,7 @@ void Game::Update()
   // float로 해서 튕기는 위치를 완전히 랜덤하게 하고 싶었지만..
   // 찾아보니 SDL_Rect는 int형인지라 따로 만들어야 하더라고요.. ㅠㅠ
   m_destinationRectangle.x += 1 * mDirectionX;
-  m_destinationRectangle.y += 1 * mDirectionY;
+  m_destinationRectangle.y += 1 * mDirectionY; */
 }
 
 void Game::Render()
