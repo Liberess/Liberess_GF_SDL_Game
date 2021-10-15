@@ -14,8 +14,11 @@ bool Game::Init(const char *title, int xpos, int ypos,  int width, int height, i
         SDL_SetRenderDrawColor(m_pRenderer, 255, 255, 255, 255);
       else
         return false; // 랜더러 생성 실패
-      
-      mTextureManager.Load("Assets/animate-alpha.png", "animate", m_pRenderer);
+
+      std::string filePath = "Assets/jiu.bmp";
+
+      if(!TheTextureManager::Instance()->Load(filePath, "animate", m_pRenderer))
+	      return false;
     }
     else
     {
@@ -31,19 +34,66 @@ bool Game::Init(const char *title, int xpos, int ypos,  int width, int height, i
   return true;
 }
 
+void Game::MoveInput()
+{
+  if(mKeyStates[SDL_SCANCODE_LEFT])
+  {
+    player->SetDirc(LEFT);
+    player->SetPosX(player->GetMoveSpeed() * -1);
+  }
+  else if(mKeyStates[SDL_SCANCODE_RIGHT])
+  {
+    player->SetDirc(RIGHT);
+    player->SetPosX(player->GetMoveSpeed());
+  }
+  else if(mKeyStates[SDL_SCANCODE_UP])
+  {
+    player->SetDirc(UP);
+    player->SetPosY(player->GetMoveSpeed() * -1);
+  }
+  else if(mKeyStates[SDL_SCANCODE_DOWN])
+  {
+    player->SetDirc(DOWN);
+    player->SetPosY(player->GetMoveSpeed());
+  }
+  else
+    player->SetMove(false);
+  
+  if(player->GetMove() == false)
+  {
+    mCurrentFrame = 0;
+    return;
+  }
+
+  mCurrentFrame = (SDL_GetTicks() / 100) % 5;
+}
+
 void Game::Update()
 {
-  mCurrentFrame = (SDL_GetTicks() / 100) % 6;
+  // ticksLastFrame을 이용하여 deltaTime 계산
+  float deltaTime = (SDL_GetTicks() - ticksLastFrame) / 1000.0f;
+
+  // 실제 프레임만큼 대기하도록 시간 계산
+  float timeToWait = FRAME_TIME_LENGTH - (SDL_GetTicks() - ticksLastFrame);
+
+  // 매개 변수만큼 지연
+  // void SDL_Delay(Unit32 ms)
+  // https://wiki.libsdl.org/SDL_Delay
+  if(timeToWait > 0 && timeToWait <= FRAME_TIME_LENGTH)
+    SDL_Delay(timeToWait);
+
+  MoveInput();
 }
 
 void Game::Render()
 {
   SDL_RenderClear(m_pRenderer);
 
-  mTextureManager.Draw("animate", 0, 0, 128, 82, m_pRenderer);
-  mTextureManager.DrawFrame("animate", 100, 100, 128, 82, 0, mCurrentFrame, m_pRenderer);
-    
+  TheTextureManager::Instance()->DrawFrame("animate", player->GetPosX(), player->GetPosY(), 50, 49, player->GetDirc(), mCurrentFrame,m_pRenderer);
+  
   SDL_RenderPresent(m_pRenderer);
+
+  ticksLastFrame = SDL_GetTicks();
 }
 
 bool Game::Running()
@@ -60,23 +110,10 @@ void Game::HandleEvents()
     switch (event.type)
     {
     case SDL_KEYDOWN:
-      switch(event.key.keysym.sym)
-      {
-      case SDLK_UP:
-        //m_destinationRectangle.y -= moveSpeed;
-        break;
-      case SDLK_LEFT:
-        direction = LEFT;
-        //m_destinationRectangle.x -= moveSpeed;
-        break;
-      case SDLK_DOWN:
-        //m_destinationRectangle.y += moveSpeed;
-        break;
-      case SDLK_RIGHT:
-        direction = RIGHT;
-        //m_destinationRectangle.x += moveSpeed;
-        break;
-      }
+      player->SetMove(true);
+      break;
+    case SDL_KEYUP:
+      player->SetMove(false);
       break;
     case SDL_QUIT:
       m_bRunning = false;
