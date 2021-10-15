@@ -3,6 +3,7 @@
 
 #include "SDL.h"
 #include "SDL_image.h"
+#include "GameObject.h"
 #include "Player.h"
 #include "TextureManager.h"
 #include <iostream>
@@ -22,7 +23,6 @@ class Game
 public:
   Game() : FRAME_TIME_LENGTH(60)
   {
-    player = new Player();
     m_bRunning = true;
 
     ticksLastFrame = 0;
@@ -30,7 +30,7 @@ public:
   
   ~Game()
   {
-    delete player;
+    
   }
 
   bool Init(const char *title, int xpos, int ypos,  int width, int height, int flags);
@@ -49,7 +49,8 @@ private:
   const int FRAME_TIME_LENGTH;
   int mCurrentFrame; // 스프라이트 애니메이션 구현을 위해 선언
   const Uint8* mKeyStates = SDL_GetKeyboardState(NULL);
-  Player* player;
+  Player m_player;
+  GameObject m_go;
 };
 
 #endif

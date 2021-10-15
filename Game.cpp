@@ -15,10 +15,13 @@ bool Game::Init(const char *title, int xpos, int ypos,  int width, int height, i
       else
         return false; // 랜더러 생성 실패
 
-      std::string filePath = "Assets/jiu.bmp";
+      std::string filePath = "Assets/animate-alpha.png";
 
       if(!TheTextureManager::Instance()->Load(filePath, "animate", m_pRenderer))
 	      return false;
+
+      m_go.Load(100, 100, 128, 82, "animate");
+      m_player.Load(300, 300, 128, 82, "animate");
     }
     else
     {
@@ -36,7 +39,7 @@ bool Game::Init(const char *title, int xpos, int ypos,  int width, int height, i
 
 void Game::MoveInput()
 {
-  if(mKeyStates[SDL_SCANCODE_LEFT])
+  /* if(mKeyStates[SDL_SCANCODE_LEFT])
   {
     player->SetDirc(LEFT);
     player->SetPosX(player->GetMoveSpeed() * -1);
@@ -63,9 +66,9 @@ void Game::MoveInput()
   {
     mCurrentFrame = 0;
     return;
-  }
+  } */
 
-  mCurrentFrame = (SDL_GetTicks() / 100) % 5;
+  mCurrentFrame = (SDL_GetTicks() / 100) % 6;
 }
 
 void Game::Update()
@@ -82,14 +85,18 @@ void Game::Update()
   if(timeToWait > 0 && timeToWait <= FRAME_TIME_LENGTH)
     SDL_Delay(timeToWait);
 
-  MoveInput();
+  //MoveInput();
+
+  m_go.Update();
+  m_player.Update();
 }
 
 void Game::Render()
 {
   SDL_RenderClear(m_pRenderer);
 
-  TheTextureManager::Instance()->DrawFrame("animate", player->GetPosX(), player->GetPosY(), 50, 49, player->GetDirc(), mCurrentFrame,m_pRenderer);
+  m_go.Draw(m_pRenderer);
+  m_player.Draw(m_pRenderer);
   
   SDL_RenderPresent(m_pRenderer);
 
@@ -110,10 +117,10 @@ void Game::HandleEvents()
     switch (event.type)
     {
     case SDL_KEYDOWN:
-      player->SetMove(true);
+      m_player.SetMove(true);
       break;
     case SDL_KEYUP:
-      player->SetMove(false);
+      m_player.SetMove(false);
       break;
     case SDL_QUIT:
       m_bRunning = false;

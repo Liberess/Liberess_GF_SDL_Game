@@ -7,7 +7,9 @@ typedef struct
   float y;
 } Vector2;
 
-class Player
+#include "GameObject.h"
+
+class Player : public GameObject
 {
 public:
   Player()
@@ -19,6 +21,11 @@ public:
 
     playerDirc = 3; // Down
   }
+
+  void Load(int x, int y, int width, int height, std::string textureID);
+  void Draw(SDL_Renderer* pRenderer);
+  void Update();
+  void Clean();
 
   // Get, Set Player Positions
   void SetPosX(float x);
