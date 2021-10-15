@@ -1,4 +1,5 @@
 #include "Game.h"
+
 Game* g_game = 0;
 
 int main(int argc, char* argv[])
