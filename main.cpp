@@ -1,5 +1,5 @@
-//실습 : 07주차 상속
-//Branch : week07_상속
+//실습 : 07주차 다형성
+//Branch : week07_다형성
 
 #include "Game.h"
 

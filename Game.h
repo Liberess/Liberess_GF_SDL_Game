@@ -6,51 +6,35 @@
 #include "GameObject.h"
 #include "Player.h"
 #include "TextureManager.h"
+#include <vector>
 #include <iostream>
-
-using namespace std;
-
-enum Dirc
-{
-  LEFT = 0,
-  RIGHT,
-  UP,
-  DOWN,
-};
 
 class Game
 {
 public:
-  Game() : FRAME_TIME_LENGTH(60)
+  Game()
   {
     m_bRunning = true;
-
-    ticksLastFrame = 0;
   }
   
-  ~Game()
-  {
-    
-  }
+  ~Game() { }
 
   bool Init(const char *title, int xpos, int ypos,  int width, int height, int flags);
   void Render();
   void Update(); 
   bool Running();
   void HandleEvents();
-  void MoveInput();
   void Clean();
+  static int GetScreenX();
+  static int GetScreenY();
 
 private:
   SDL_Window* m_pWindow;
   SDL_Renderer* m_pRenderer;
   bool m_bRunning;
-  float ticksLastFrame;
-  const int FRAME_TIME_LENGTH;
-  int mCurrentFrame; // 스프라이트 애니메이션 구현을 위해 선언
-  const Uint8* mKeyStates = SDL_GetKeyboardState(NULL);
-  Player m_player;
-  GameObject m_go;
+  static int m_screenX;
+  static int m_screenY;
+  std::vector<GameObject*> m_gameObjs;
 };
 
 #endif
