@@ -1,19 +1,20 @@
-#include "Game.h"
+//실습 : 08주차 Vector2D
+//Branch : Week08_Vector2D
 
-Game* g_game = 0;
+#include "GameManager.h"
 
 int main(int argc, char* argv[])
 {
-  g_game = new Game();
-  g_game->Init("Game Class", 100, 100, 640, 480, 0);
+  TheGameManager::Instance()->Init("Game Class", 100, 100, 640, 480, 0);
 
-  while (g_game->Running())
+  while (TheGameManager::Instance()->Running())
   {
-    g_game->HandleEvents();
-    g_game->Update();
-    g_game->Render();
+    TheGameManager::Instance()->HandleEvents();
+    TheGameManager::Instance()->Update();
+    TheGameManager::Instance()->Render();
+    SDL_Delay(10);
   }
 
-  g_game->Clean();
+  TheGameManager::Instance()->Clean();
   return 0;
 }
