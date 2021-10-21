@@ -1,9 +1,14 @@
-#include "Game.h"
+#include "GameManager.h"
+#include "Enemy.h"
+#include "Player.h"
 
-int Game::m_screenX = 0;
-int Game::m_screenY = 0;
+// 정적 멤버변수 초기화
+GameManager* GameManager::s_pInstance = 0;
 
-bool Game::Init(const char *title, int xpos, int ypos,  int width, int height, int flags)
+int GameManager::m_screenX = 0;
+int GameManager::m_screenY = 0;
+
+bool GameManager::Init(const char *title, int xpos, int ypos, int width, int height, int flags)
 {
   if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
   {
@@ -26,14 +31,8 @@ bool Game::Init(const char *title, int xpos, int ypos,  int width, int height, i
       if(!TheTextureManager::Instance()->Load(filePath, "animate", m_pRenderer))
 	      return false;
 
-      GameObject* m_go = new GameObject();
-      GameObject* m_player = new Player();
-
-      m_go->Load(100, 100, 128, 82, 6, "animate");
-      m_player->Load(300, 300, 128, 82, 6, "animate");
-
-      m_gameObjs.push_back(m_go);
-      m_gameObjs.push_back(m_player);
+      m_gameObjs.push_back(new Player(new LoaderParams(100, 100, 128, 82, 6, "animate")));
+      m_gameObjs.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, 6, "animate")));
     }
     else
     {
@@ -49,28 +48,23 @@ bool Game::Init(const char *title, int xpos, int ypos,  int width, int height, i
   return true;
 }
 
-void Game::Update()
+void GameManager::Update()
 {
   for(int i = 0; i < m_gameObjs.size(); i++)
     m_gameObjs[i]->Update();
 }
 
-void Game::Render()
+void GameManager::Render()
 {
   SDL_RenderClear(m_pRenderer);
 
   for(int i = 0; i < m_gameObjs.size(); i++)
-    m_gameObjs[i]->Draw(m_pRenderer);
+    m_gameObjs[i]->Draw();
 
   SDL_RenderPresent(m_pRenderer);
 }
 
-bool Game::Running()
-{ 
-  return m_bRunning; 
-}
-
-void Game::HandleEvents() 
+void GameManager::HandleEvents() 
 {
   SDL_Event event;
 
@@ -83,11 +77,7 @@ void Game::HandleEvents()
   }
 }
 
-int Game::GetScreenX() { return m_screenX; }
-
-int Game::GetScreenY() { return m_screenY; }
-
-void Game::Clean() 
+void GameManager::Clean() 
 {
   SDL_DestroyWindow(m_pWindow);
   SDL_DestroyRenderer(m_pRenderer);

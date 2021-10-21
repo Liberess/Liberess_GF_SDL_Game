@@ -3,6 +3,7 @@
 
 #include "SDL.h"
 #include "TextureManager.h"
+#include "LoaderParams.h"
 #include <iostream>
 
 enum DirtX
@@ -22,23 +23,13 @@ class GameObject
 public:
   GameObject() {}
   virtual ~GameObject() {}
-  virtual void Load(int x, int y, int width, int height, int frame, std::string textureID);
-  virtual void Draw(SDL_Renderer* pRenderer);
-  virtual void Update();
-  virtual void Clean();
-
+  virtual void Draw() = 0;
+  virtual void Update() = 0;
+  virtual void Clean() = 0;
+  // Load 함수를 제외한 이유
+  
 protected:
-  std::string m_textureID;
-  int m_x;
-  int m_y;
-  int m_width;
-  int m_height;
-  int m_dircX;
-  int m_dircY;
-  int m_imgframe;
-  int m_currentRow;
-  int m_currentFrame;
-  SDL_RendererFlip flip;
+  GameObject(const LoaderParams* pParams) {}
 };
 
 #endif
