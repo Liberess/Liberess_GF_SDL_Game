@@ -1,5 +1,5 @@
-//실습 : 08주차 추상Class
-//Branch : Week08_추상Class
+//실습 : 08주차 Vector2D
+//Branch : Week08_Vector2D
 
 #include "GameManager.h"
 

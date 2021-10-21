@@ -1,6 +1,7 @@
 #ifndef __SDLGameObject_H__
 #define __SDLGameObject_H__
 
+#include "Vector2D.h"
 #include "GameObject.h"
 #include "GameManager.h"
 
@@ -14,7 +15,7 @@ public:
   virtual void Clean() {};
 
 protected:
-  int m_x, m_y;
+  Vector2D m_position;
   int m_width, m_height;
   int m_imgframe;
   std::string m_textureID;

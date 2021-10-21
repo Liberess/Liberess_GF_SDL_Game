@@ -15,11 +15,11 @@ void Player::Draw()
 void Player::Update()
 {
   // Set Move Direction
-  if(m_x + m_width >= TheGameManager::Instance()->GetScreenX() || m_x <= 0)
+  if(m_position.GetX() + m_width >= TheGameManager::Instance()->GetScreenX() || m_position.GetX() <= 0)
     m_dircX *= -1;
 
   // Set Movement
-  m_x += 1 * m_dircX;
+  m_position.SetX(m_position.GetX() + 1 * m_dircX);
 
   // Set FlipX
   (m_dircX == DirtX::RIGHT) ? m_flipX = SDL_FLIP_NONE : m_flipX = SDL_FLIP_HORIZONTAL; 
