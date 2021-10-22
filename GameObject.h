@@ -27,6 +27,7 @@ public:
   virtual void Update() = 0;
   virtual void Clean() = 0;
   // Load 함수를 제외한 이유
+  // 불필요한 객체(변수) 생성과, 함수 호출을 피하기 위함
   
 protected:
   GameObject(const LoaderParams* pParams) {}
