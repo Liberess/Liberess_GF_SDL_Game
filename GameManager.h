@@ -28,6 +28,7 @@ public:
   static int GetScreenX() { return m_screenX; }
   static int GetScreenY() { return m_screenY; }
   SDL_Renderer* GetRenderer() const { return m_pRenderer;}
+  void Quit() { m_bRunning = false; }
 
 private:
   GameManager() { m_bRunning = true; }

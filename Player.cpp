@@ -14,19 +14,39 @@ void Player::Draw()
 
 void Player::Update()
 {
-  /* if(m_position.GetX() + m_width >= TheGameManager::Instance()->GetScreenX() || m_position.GetX() <= 0)
-    m_dircX *= -1;
+  HandleInput();
 
-  m_position.SetX(m_position.GetX() + 1 * m_dircX);
+  if(m_velocity.GetX() != 0 || m_velocity.GetY() != 0)
+    m_currentFrame = (SDL_GetTicks() / 100) % m_imgframe;
+  else
+    m_currentFrame = 0;
 
-  (m_dircX == DirtX::RIGHT) ? m_flipX = SDL_FLIP_NONE : m_flipX = SDL_FLIP_HORIZONTAL; */
-
-  // Set Img Frame
-  m_currentFrame = (SDL_GetTicks() / 100) % m_imgframe;
-
-  // Set Velocity
-  m_velocity.SetX(1);
   SDLGameObject::Update();
+}
+
+void Player::HandleInput()
+{
+  if(TheInputHandler::Instance()->IsKeyDown(SDL_SCANCODE_RIGHT))
+  {
+    m_velocity.SetX(2);
+    m_flipX = SDL_FLIP_NONE;
+  }
+  else if(TheInputHandler::Instance()->IsKeyDown(SDL_SCANCODE_LEFT))
+  {
+    m_velocity.SetX(-2);
+    m_flipX = SDL_FLIP_HORIZONTAL;
+  }
+  else
+  {
+    m_velocity.SetX(0);
+  }
+    
+  if(TheInputHandler::Instance()->IsKeyDown(SDL_SCANCODE_UP))
+    m_velocity.SetY(-2);
+  else if(TheInputHandler::Instance()->IsKeyDown(SDL_SCANCODE_DOWN))
+    m_velocity.SetY(2);
+  else
+    m_velocity.SetY(0);
 }
 
 void Player::Clean()

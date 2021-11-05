@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "Enemy.h"
 #include "Player.h"
+#include "InputHandler.h"
 
 // 정적 멤버변수 초기화
 GameManager* GameManager::s_pInstance = 0;
@@ -66,19 +67,12 @@ void GameManager::Render()
 
 void GameManager::HandleEvents() 
 {
-  SDL_Event event;
-
-  if (SDL_PollEvent(&event))
-  {
-    switch (event.type)
-    {
-
-    }
-  }
+  TheInputHandler::Instance()->Update();
 }
 
 void GameManager::Clean() 
 {
+  TheInputHandler::Instance()->Clean();
   SDL_DestroyWindow(m_pWindow);
   SDL_DestroyRenderer(m_pRenderer);
   SDL_Quit();
