@@ -11,11 +11,13 @@ public:
   SDLGameObject(const LoaderParams* pParams);
   virtual ~SDLGameObject() {}
   virtual void Draw();
-  virtual void Update() {};
-  virtual void Clean() {};
+  virtual void Update(); // 실습
+  virtual void Clean() {}
 
 protected:
   Vector2D m_position;
+  Vector2D m_velocity;
+  Vector2D m_acceleration;
   int m_width, m_height;
   int m_imgframe;
   std::string m_textureID;

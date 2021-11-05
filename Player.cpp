@@ -14,18 +14,19 @@ void Player::Draw()
 
 void Player::Update()
 {
-  // Set Move Direction
-  if(m_position.GetX() + m_width >= TheGameManager::Instance()->GetScreenX() || m_position.GetX() <= 0)
+  /* if(m_position.GetX() + m_width >= TheGameManager::Instance()->GetScreenX() || m_position.GetX() <= 0)
     m_dircX *= -1;
 
-  // Set Movement
   m_position.SetX(m_position.GetX() + 1 * m_dircX);
 
-  // Set FlipX
-  (m_dircX == DirtX::RIGHT) ? m_flipX = SDL_FLIP_NONE : m_flipX = SDL_FLIP_HORIZONTAL; 
+  (m_dircX == DirtX::RIGHT) ? m_flipX = SDL_FLIP_NONE : m_flipX = SDL_FLIP_HORIZONTAL; */
 
   // Set Img Frame
   m_currentFrame = (SDL_GetTicks() / 100) % m_imgframe;
+
+  // Set Velocity
+  m_velocity.SetX(1);
+  SDLGameObject::Update();
 }
 
 void Player::Clean()

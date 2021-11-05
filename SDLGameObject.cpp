@@ -1,7 +1,7 @@
 #include "SDLGameObject.h"
 
 SDLGameObject::SDLGameObject(const LoaderParams* pParams)
-  : GameObject(pParams), m_position(pParams->GetX(), pParams->GetY())
+  : GameObject(pParams), m_position(pParams->GetX(), pParams->GetY()), m_velocity(0, 0), m_acceleration(0, 0)
 {
   m_width = pParams->GetWidth();
   m_height = pParams->GetHeight();
@@ -24,4 +24,10 @@ void SDLGameObject::Draw()
           TheGameManager::Instance()->GetRenderer(),
           m_flipX
         );
+}
+
+void SDLGameObject::Update()
+{
+  m_velocity += m_acceleration;
+  m_position += m_velocity;
 }

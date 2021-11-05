@@ -32,7 +32,7 @@ bool GameManager::Init(const char *title, int xpos, int ypos, int width, int hei
 	      return false;
 
       m_gameObjs.push_back(new Player(new LoaderParams(100, 100, 128, 82, 6, "animate")));
-      m_gameObjs.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, 6, "animate")));
+      m_gameObjs.push_back(new Enemy(new LoaderParams(100, 300, 128, 82, 6, "animate")));
     }
     else
     {
