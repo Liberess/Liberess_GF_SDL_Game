@@ -1,5 +1,5 @@
-//실습 : 10주차 물리
-//Branch : Week10_물리
+//실습 : 10주차 키입력
+//Branch : Week10_키입력
 
 #include "GameManager.h"
 

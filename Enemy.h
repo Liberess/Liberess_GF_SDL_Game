@@ -10,6 +10,7 @@ public:
   virtual void Draw();
   virtual void Update();
   virtual void Clean();
+  void HandleInput();
 };
 
 #endif
